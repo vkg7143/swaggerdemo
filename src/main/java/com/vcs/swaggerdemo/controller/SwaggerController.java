@@ -14,23 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vcs.swaggerdemo.model.Contact;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 
 public class SwaggerController {
 
 	ConcurrentMap<String, Contact> contacts = new ConcurrentHashMap<>();
-
+	
+    
 	@GetMapping("/{id}")
+	@ApiOperation(value="Finds contact by id",response=Contact.class)
 	public Contact getContact(@PathVariable String id) {
 		return contacts.get(id);
 	}
 
 	@GetMapping("/get")
+	@ApiOperation(value="Finds all contact")
 	public List<Contact> getAllContacts() {
 		return new ArrayList<Contact>(contacts.values());
 	}
 
 	@PostMapping("/post")
+	@ApiOperation(value="Post the contact")
 	public Contact addContact(@RequestBody Contact contact) {
 		 contacts.put(contact.getId(), contact);
 		 return contact;
